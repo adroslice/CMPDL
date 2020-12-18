@@ -1,4 +1,9 @@
 .idea
 .gradle
 build
+bin
 out
+.classpath
+.project
+.vscode
+.settings

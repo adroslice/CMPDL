@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -43,18 +44,29 @@ public final class CMPDL {
 
     public static void main(String[] args) {
         if (args.length > 0) {
-            if (args.length != 1) {
-                System.out.println("USAGE:");
-                System.out.println("cmpdl | open interface");
-                System.out.println("cmpdl <url> | download the specified pack version");
-                System.exit(1);
+            if(args.length == 1) {
+                try {
+                    downloadFromURL(args[0]);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
-
-            String url = args[0];
-            try {
-                downloadFromURL(url);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            else {
+                if(args[0].equals("-url")) {
+                    try {
+                        downloadFromURL(args[1]);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else if(args[0].equals("-zip")) {
+                    String path = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
+                    try {
+                        setupFromLocalFile(Paths.get(path));
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         } else {
             Interface.openInterface();
