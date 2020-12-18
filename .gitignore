@@ -1,9 +1,9 @@
+.classpath
+.project
+.vscode
+.settings
 .idea
 .gradle
 build
 bin
 out
-.classpath
-.project
-.vscode
-.settings
